@@ -1,0 +1,13 @@
+pandas
+seaborn
+matplotlib
+numpy
+contractions
+spacy
+ydata-profiling
+scikit-learn
+xgboost
+chardet
+nltk
+ipywidgets
+inflect

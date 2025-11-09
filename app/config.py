@@ -27,3 +27,5 @@ ALLOWED_ORIGINS = ["*"]
 MIN_TEXT_LENGTH = 10
 ACCEPTED_FILE_TYPES = ["text/plain", "application/pdf"]
 MAX_FILE_SIZE = 10 * 1024 * 1024  # 10 MB
+
+FRONTEND_DIR = BASE_DIR / "frontend"

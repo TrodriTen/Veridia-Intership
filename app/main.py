@@ -5,7 +5,8 @@ from typing import Optional
 
 from fastapi import FastAPI, HTTPException, UploadFile, File, status
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, FileResponse
+from fastapi.staticfiles import StaticFiles
 
 from app.config import (
     API_TITLE,
@@ -16,7 +17,9 @@ from app.config import (
     ALLOWED_ORIGINS,
     MIN_TEXT_LENGTH,
     ACCEPTED_FILE_TYPES,
-    MAX_FILE_SIZE
+    MAX_FILE_SIZE,
+    BASE_DIR,
+    FRONTEND_DIR
 )
 from app.schemas import (
     ResumeText,
@@ -46,6 +49,10 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+if FRONTEND_DIR.exists():
+    app.mount("/static", StaticFiles(directory=str(FRONTEND_DIR)), name="static")
 
 vectorizer = None
 model = None
@@ -96,6 +103,11 @@ async def startup_event():
 
 @app.get("/", tags=["General"])
 def read_root():
+    """Serve the frontend application"""
+    index_path = FRONTEND_DIR / "index.html"
+    if index_path.exists():
+        return FileResponse(index_path)
+
     return {
         "message": f"{API_TITLE} v{API_VERSION}",
         "status": "running",

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Classifier</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📄 Resume Classifier</h1>
+            <p class="subtitle">AI-powered resume classification using Machine Learning</p>
+        </header>
+
+        <main>
+            <!-- Tab Navigation -->
+            <div class="tabs">
+                <button class="tab-button active" data-tab="text">Text Input</button>
+                <button class="tab-button" data-tab="file">Upload File</button>
+            </div>
+
+            <!-- Text Input Tab -->
+            <div id="text-tab" class="tab-content active">
+                <div class="input-section">
+                    <label for="resume-text">Paste Resume Text:</label>
+                    <textarea 
+                        id="resume-text" 
+                        placeholder="Paste your resume text here... (minimum 100 characters)"
+                        rows="12"
+                    ></textarea>
+                    <div class="char-counter">
+                        <span id="char-count">0</span> characters
+                    </div>
+                    <button id="analyze-text-btn" class="btn btn-primary">
+                        <span class="btn-text">Analyze Resume</span>
+                        <span class="btn-loader hidden">Analyzing...</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- File Upload Tab -->
+            <div id="file-tab" class="tab-content">
+                <div class="input-section">
+                    <div class="file-upload-area" id="file-upload-area">
+                        <input type="file" id="file-input" accept=".txt,.pdf" hidden>
+                        <div class="upload-icon">📁</div>
+                        <p class="upload-text">
+                            <strong>Click to upload</strong> or drag and drop
+                        </p>
+                        <p class="upload-subtext">TXT or PDF (max 10MB)</p>
+                    </div>
+                    <div id="file-info" class="file-info hidden">
+                        <span class="file-name"></span>
+                        <button class="remove-file-btn">✕</button>
+                    </div>
+                    <button id="analyze-file-btn" class="btn btn-primary" disabled>
+                        <span class="btn-text">Analyze Resume</span>
+                        <span class="btn-loader hidden">Analyzing...</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div id="results-section" class="results-section hidden">
+                <h2>Classification Results</h2>
+                
+                <div class="result-card">
+                    <div class="result-header">
+                        <h3>Predicted Category</h3>
+                        <div id="predicted-category" class="category-badge"></div>
+                    </div>
+                    <div class="confidence-bar">
+                        <div class="confidence-label">
+                            <span>Confidence</span>
+                            <span id="confidence-value">0%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div id="confidence-progress" class="progress-fill"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="probabilities-card">
+                    <h3>Top Categories Probabilities</h3>
+                    <div id="probabilities-chart" class="chart"></div>
+                </div>
+
+                <button id="reset-btn" class="btn btn-secondary">Analyze Another Resume</button>
+            </div>
+
+            <!-- Error Section -->
+            <div id="error-section" class="error-section hidden">
+                <div class="error-icon">⚠️</div>
+                <h3>Error</h3>
+                <p id="error-message"></p>
+                <button id="error-reset-btn" class="btn btn-secondary">Try Again</button>
+            </div>
+        </main>
+
+        <footer>
+            <p>Powered by FastAPI & Machine Learning | 
+                <a href="/docs" target="_blank">API Docs</a>
+            </p>
+        </footer>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>

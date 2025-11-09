@@ -1,15 +1,16 @@
-# Resume Classifier API 
+# Resume Classifier 
 
-Resume classification API using Machine Learning with FastAPI.
+Resume classification system using Machine Learning with FastAPI and web interface.
 
 ## Features
 
-- Automatic resume classification into professional categories
+- Automatic resume classification into 23+ professional categories
+- Modern web interface for easy testing
 - REST API with FastAPI
 - Support for TXT and PDF files
 - Text preprocessing with NLTK
 - Optimized Random Forest model
-- Interactive documentation with Swagger
+- Interactive API documentation with Swagger
 
 ## Project Structure
 
@@ -24,6 +25,10 @@ Veridia/
 │   ├── config.py              # Configuration
 │   ├── utils.py               # Utility functions
 │   └── models/                # Trained models (.pkl)
+├── frontend/
+│   ├── index.html             # Web interface
+│   ├── styles.css             # Styles
+│   └── script.js              # Frontend logic
 ├── data/
 │   ├── Resume.csv             # Original dataset
 │   ├── train_clean_balanced.csv
@@ -52,7 +57,7 @@ Veridia/
 python -m app.train_pipeline
 ```
 
-### 3. Run the API
+### 3. Run the Application
 
 ```bash
 ./run.sh
@@ -60,14 +65,31 @@ python -m app.train_pipeline
 uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
-The API will be available at:
-- **API**: http://localhost:8000
-- **Documentation**: http://localhost:8000/docs
+Access the application:
+- **Web Interface**: http://localhost:8000 (Main interface for testing)
+- **API Documentation**: http://localhost:8000/docs
 - **ReDoc**: http://localhost:8000/redoc
 
-## API Usage
+## Usage
 
-### Main Endpoints
+### Web Interface (Recommended)
+
+1. Run the application with `./run.sh`
+2. Open http://localhost:8000 in your browser
+3. Choose between two options:
+   - **Text Input**: Paste resume text directly
+   - **Upload File**: Upload a TXT or PDF file
+4. Click "Analyze Resume" to get results
+5. View the predicted category, confidence, and top probabilities
+
+The web interface provides:
+- Visual and intuitive results
+- Confidence charts and probabilities
+- Drag and drop file upload
+- Real-time validation
+- Modern and responsive design
+
+### API Usage (Programmatic)
 
 #### 1. Health Check
 ```bash
@@ -145,11 +167,22 @@ Configuration is located in `app/config.py`:
 
 ## Testing
 
-Test the API with interactive documentation:
+### Option 1: Web Interface (Easiest)
+
+1. Run `./run.sh`
+2. Open http://localhost:8000
+3. Test with resume text or upload files
+4. See visual results immediately
+
+### Option 2: Interactive API Documentation
 
 1. Open http://localhost:8000/docs
 2. Test endpoints directly from the browser
 3. See examples and data schemas
+
+### Option 3: Command Line
+
+Use curl commands as shown in the API Usage section above.
 
 ## Troubleshooting
 
@@ -176,7 +209,7 @@ chmod +x preprocess.sh train.sh run.sh
 ## Endpoint Documentation
 
 ### GET `/`
-General API information
+Web interface - Interactive UI for resume classification
 
 ### GET `/health`
 API and model status
@@ -184,11 +217,21 @@ API and model status
 ### POST `/predict`
 Prediction from JSON text
 
+**Request Body:**
+```json
+{
+  "text": "Your resume text here..."
+}
+```
+
 ### POST `/predict/file`
-Prediction from file (TXT or PDF)
+Prediction from file (TXT or PDF, max 10MB)
+
+**Form Data:**
+- `file`: Resume file
 
 ### GET `/categories`
-List of available categories
+List of 23+ available professional categories
 
 ## Contributing
 
